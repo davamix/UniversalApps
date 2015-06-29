@@ -29,6 +29,9 @@
 				var helloButton = document.getElementById("helloButton");
 				helloButton.addEventListener("click", buttonClickHandler, false);
 
+				var nameInput = document.getElementById("nameInput");
+				nameInput.addEventListener("change", nameInputChanged);
+
 			}));
 		}
 	};
@@ -50,6 +53,20 @@
 
 		var ratingOutput = document.getElementById("ratingOutput");
 		ratingOutput.innerText = eventInfo.detail.tentativeRating;
+
+		// Store the rating for multiple sessions.
+		var appData = Windows.Storage.ApplicationData.current;
+		var roamingSettings = appData.roamingSettings;
+		roamingSettings.values["greetingRating"] = eventInfo.detail.tentativeRating;
+	}
+
+	function nameInputChanged(eventInfo) {
+		var nameInput = eventInfo.srcElement;
+
+		// Store the user's name for multiple sessions.
+		var appData = Windows.Storage.ApplicationData.current;
+		var roamingSettings = appData.roamingSettings;
+		roamingSettings.values["userName"] = nameInput.value;
 	}
 
 	app.start();
