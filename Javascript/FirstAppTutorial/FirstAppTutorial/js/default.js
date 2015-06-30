@@ -47,6 +47,9 @@
 		var userName = document.getElementById("nameInput").value;
 		var greetingString = "Hello, " + userName + "!";
 		document.getElementById("greetingOutput").innerText = greetingString;
+
+		// Save the session data
+		WinJS.Application.sessionState.greetingOutput = greetingString;
 	}
 
 	function ratingChanged(eventInfo) {
