@@ -13,6 +13,12 @@
 			} else {
 				// TODO: This application has been reactivated from suspension.
 				// Restore application state here.
+
+				var outputValue = WinJS.Application.sessionState.greetingOutput;
+				if (outputValue) {
+					var greetingOutput = document.getElementById("greetingOutput");
+					greetingOutput.innerText = outputValue;
+				}
 			}
 			args.setPromise(WinJS.UI.processAll().then(function completed() {
 
@@ -31,6 +37,23 @@
 
 				var nameInput = document.getElementById("nameInput");
 				nameInput.addEventListener("change", nameInputChanged);
+
+				//Restore app data
+
+				var roamingSettings = Windows.Storage.ApplicationData.current.roamingSettings;
+
+				var userName = Windows.Storage.ApplicationData.current.roamingSettings.values["userName"];
+				if (userName) {
+					nameInput.value = userName;
+				}
+
+				var greetingRating = roamingSettings.values["greetingRating"];
+				if (greetingRating) {
+					ratingControl.userRating = greetingRating;
+
+					var ratingOutput = document.getElementById("ratingOutput");
+					ratingOutput.innerText = greetingRating;
+				}
 
 			}));
 		}
